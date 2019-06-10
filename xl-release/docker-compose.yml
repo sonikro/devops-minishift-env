@@ -1,0 +1,6 @@
+version: '3'
+services:
+    openshift_client:
+      image: openshift-ssh-client
+      ports:
+        - "2222:22"

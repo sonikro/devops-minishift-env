@@ -1,0 +1,1 @@
+minishift start --show-libmachine-logs -v 5 --vm-driver hyperv --hyperv-virtual-switch NATSwitch

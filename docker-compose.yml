@@ -1,0 +1,45 @@
+version: '3'
+services:
+    postgres:
+      image: postgres:9.5
+      environment:
+       - "POSTGRES_USER=gogs"
+       - "POSTGRES_PASSWORD=gogs"
+       - "POSTGRES_DB=gogs"
+      volumes:
+       - "db-data:/var/lib/postgresql/data"
+    gogs:
+      image: gogs/gogs:latest
+      ports:
+       - "10022:22"
+       - "3000:3000"
+      links:
+       - postgres
+      environment:
+       - "RUN_CROND=true"
+      volumes:
+       - "gogs-data:/data"
+      depends_on:
+       - postgres
+    nexus:
+      image: sonatype/nexus3:3.9.0
+      volumes:
+        - "nexus-data:/nexus-data"
+      ports:
+        - "8081:8081"
+    sonarqube:
+      image: sonarqube
+      volumes:
+        - "sonarqube-data:/opt/sonarqube"
+      ports:
+        - "9000:9000"
+
+volumes:
+    db-data:
+      driver: local
+    gogs-data:
+      driver: local
+    nexus-data:
+      driver: local
+    sonarqube-data:
+      driver: local
